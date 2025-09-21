@@ -3,23 +3,22 @@
 using namespace std;
 
 struct Block {
-    int start;      // Start address
-    int size;       // Size of the block
-    bool free;      // Is block free or allocated
+    int start;
+    int size;
+    bool free;
 };
 
 class MemoryManager {
 private:
-    vector<Block> memory; // List of memory blocks
+    vector<Block> memory;
     int totalSize;
 
 public:
     MemoryManager(int size) {
         totalSize = size;
-        memory.push_back({0, size, true}); // Start with one big free block
+        memory.push_back({0, size, true});
     }
 
-    // Display memory blocks
     void displayMemory() {
         cout << "\nMemory Blocks:\n";
         cout << "Start\tSize\tStatus\n";
@@ -28,7 +27,6 @@ public:
         }
     }
 
-    // Allocate memory using best-fit or worst-fit
     void allocate(int size, string strategy) {
         int index = -1;
 
@@ -68,7 +66,6 @@ public:
         cout << "Allocated " << size << " units at address " << startAddr << endl;
     }
 
-    // Free memory at a given start address
     void deallocate(int startAddr) {
         int index = -1;
         for (int i = 0; i < memory.size(); i++) {
@@ -86,7 +83,6 @@ public:
         memory[index].free = true;
         cout << "Freed block starting at address " << startAddr << endl;
 
-        // Merge adjacent free blocks
         if (index > 0 && memory[index - 1].free) {
             memory[index - 1].size += memory[index].size;
             memory.erase(memory.begin() + index);
@@ -137,3 +133,4 @@ int main() {
 
     return 0;
 }
+
